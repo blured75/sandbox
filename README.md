@@ -119,7 +119,7 @@ fetchGalliceBC().then(docs => {
     countNumberOfKeywordsPerDoc(docs)
     db.close()
     writeStream.end()
-})
+}) 
 .catch(err => {
     throw err
 })
