@@ -1,26 +1,12 @@
 const MongoClient = require("mongodb").MongoClient
 const assert = require("assert")
-const fs = require('fs')
 
-const filePath = '/tmp/output.csv'
-const connectionStr = "mongodb://prodmongodb2.production.europages.com:27017/onlinedb"
+const connectionStr = "mongodb://prodmongodb1.production.europages.com:27017/onlinedb"
 const mongoOptions = {native_parser:true}
 
-let writeStream = fs.createWriteStream(filePath, "UTF-8")
-
-writeStream.on('error', function (err) {
-    console.log(err);
-})
-
-// the finish event is emitted when all data has been flushed from the stream
-writeStream.on('finish', () => {
-    console.log('wrote all data to file');
-})
-
 try { 
-
     MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
-        assert.equal(null, err)
+        assert.equal(null, err);
         
         //Step 1: declare promise
         let fetchBC = () => {
@@ -33,26 +19,21 @@ try {
             .toArray((err, docs) => {
                 err 
                     ? reject(err) 
-                    : resolve(docs)
-            })
-        })
-    }
+                    : resolve(docs);
+            });
+        });
+    };
 
-    //Step 2: make the call
+    //Step 3: make the call
     fetchBC().then(docs => {
         console.log("**** after the query call and after the obtention of results ****")
         countNumberOfKeywordsPerDoc(docs)
-        db.close()
-        // close the stream
-        writeStream.end()
+        db.close();
      })
-     .catch(err => {
-         throw err
-     })
-  }) //end mongo client
+  }); //end mongo client
  
  } catch (e) {
-    console.log("INTERCEPTED ONE ERROR erreur : " + e)
+    console.log("erreur : " + e)
  }
 
 function countNumberOfKeywordsPerDoc(docs) {
@@ -70,21 +51,13 @@ function countNumberOfKeywordsPerDoc(docs) {
                 nbSkd++
             }
         })
-        try {
-            generateLogLine(doc, nbHea, nbSkd)   
-        }
-        catch (err) {
-            console.log(err)
-        }
+        
+        generateLogLine(doc, nbHea, nbSkd)   
     })
 }
 
-function generateLogLine(doc, nbHea, nbSkd) { 
-    // write some data with a base64 encoding
-    //try {
-        writeStream.write('"%s";"%s";"%s";"%s";"%s";"%s";"%s";"%s"', doc.content.uid, doc.content.sid, doc.content.companyName, doc.content.offerCode, doc.content.articles[3].advText === undefined ? "0" : doc.content.articles[3].advText.length, doc.content.articles[3].keywords.length, nbHea, nbSkd)
-    //}
-    //catch (err) {
-    //    console.log(err)
-    //}
+function generateLogLine(doc, nbHea, nbSkd) {
+    if (nbHea > 1) {
+        console.log('"%s";"%s";"%s";"%s";"%s";"%s";"%s";"%s"', doc.content.uid, doc.content.sid, doc.content.companyName, doc.content.offerCode, doc.content.articles[3].advText === undefined ? "0" : doc.content.articles[3].advText.length, doc.content.articles[3].keywords.length, nbHea, nbSkd)
+    }
 }
