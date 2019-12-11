@@ -1,7 +1,7 @@
 const MongoClient = require("mongodb").MongoClient
 const assert = require("assert")
 
-const connectionStr = "mongodb://prodmongodb1.production.europages.com:27017/onlinedb"
+const connectionStr = "mongodb://prodmongodb2.production.europages.com:27017/onlinedb"
 const mongoOptions = {native_parser:true}
 
 try { 
