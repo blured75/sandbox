@@ -38,14 +38,6 @@ function fetchGalliceBC() {
     })
 }
 
-fetchGalliceBC().then(docs => {
-    countNumberOfKeywordsPerDoc(docs)
-    writeStream.end()
-})
-.catch(err => {
-    throw err
-})
-  
 
 function countNumberOfKeywordsPerDoc(docs) {
     docs.forEach(doc => {
@@ -69,5 +61,49 @@ function countNumberOfKeywordsPerDoc(docs) {
         catch (err) {
             console.log(err)
         }
+    })
+}
+
+fetchGalliceBC().then(docs => {
+    countNumberOfKeywordsPerDoc(docs)
+    writeStream.end()
+})
+.catch(err => {
+    throw err
+})
+
+fetchAllHeadings().then(docs => {
+    let beginWithA = 0
+    let beginWithB = 0
+    let beginWithC = 0
+    docs.forEach(doc => {
+        let label = doc.content.labels[3].toUpperCase()
+        if (label.match(/^A/)) beginWithA++
+        if (label.match(/^B/)) beginWithB++
+        if (label.match(/^B/)) beginWithC++
+    })
+
+    console.log(`A ${beginWithA}
+                 B ${beginWithB}
+                 C ${beginWithC}`)
+})
+
+function fetchAllHeadings() {
+    //Step 1: declare promise
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
+            assert.equal(null, err)
+            
+            db
+            .collection('content_concept')
+            .find({ }, 
+                {"content.labels":1})
+            .toArray((err, docs) => {
+                err 
+                    ? reject(err) 
+                    : resolve(docs)
+            })
+           // db.close()
+        })
     })
 }
