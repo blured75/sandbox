@@ -27,8 +27,7 @@ function fetchGalliceBC() {
             //Step 1: declare promise
             console.log("rereerer")
 
-            
-
+            return () => {
                 return new Promise((resolve, reject) => {
                     db
                     .collection('content_businesscard')
@@ -41,6 +40,7 @@ function fetchGalliceBC() {
                             : resolve(docs)
                     })
                 })
+            }
             
         })
     }
@@ -49,7 +49,7 @@ function fetchGalliceBC() {
 
 console.log(fetchGalliceBC())
 
-fetchGalliceBC()().then(docs => {
+fetchGalliceBC().then(docs => {
     console.log("**** after the query call and after the obtention of results ****")
     countNumberOfKeywordsPerDoc(docs)
     db.close()
