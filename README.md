@@ -138,3 +138,27 @@ TypeError: fetchGalliceBC(...).then is not a function
 
 Je viens de trouver la solution je suis passé de l'écoute de Meddle à Moustaki. Y aurait il un lien de causalité ?
 
+Il suffit de retourner la promesse un niveau plus haut (avant MongoClient.connect)
+
+```js
+function fetchGalliceBC() {
+    //Step 1: declare promise
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
+            assert.equal(null, err)
+            
+            db
+            .collection('content_businesscard')
+            .find({ $or: [ {"content.articles.keywords.cptId":78922} , { "content.articles.keywords.cptId":78923 }] , 
+                            "content.portfolio":"EUR"}, 
+                {"content.articles":1, "content.uid":1, "content.":1, "content.sid":1, "content.offerCode":1, "content.companyName":1})
+            .toArray((err, docs) => {
+                err 
+                    ? reject(err) 
+                    : resolve(docs)
+            })
+            db.close()
+        })
+    })
+}
+```
