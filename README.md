@@ -135,3 +135,6 @@ fetchGalliceBC().then(docs => {
 
 TypeError: fetchGalliceBC(...).then is not a function
 ```
+
+Je viens de trouver la solution je suis passé de l'écoute de Meddle à Moustaki. Y aurait il un lien de causalité ?
+
