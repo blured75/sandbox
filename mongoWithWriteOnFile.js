@@ -18,11 +18,9 @@ writeStream.on('finish', () => {
 })
 
 function fetchGalliceBC() {
-    
-    
     return () => {
         MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
-            //assert.equal(null, err)
+            assert.equal(null, err)
             
             //Step 1: declare promise
             console.log("rereerer")
