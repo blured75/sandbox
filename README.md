@@ -32,7 +32,8 @@ Les promises ont été créé depuis ES5 afin de moins se prendre la tête avec 
 Une promesse (une sorte de function) prend en constructeur 2 fonctions de callback (resolve et error). resolve sera à appeler dans la promesse si l'exécution s'est déroulé sans encombre, error dans le cas contraire. Une promesse permet d'englober un code asynchrone et d'appeler la fonction success si tout se passe bien. On passe alors un argument à reject ou success.
 A la suite de la promesse on indique .then(...) pour exécuter le code que l'on souhaite et on récupère le paramètre passée à la fonction success.
 
-    
+Dossier firstSample/
+
 Exemple :
 ```js
 MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
@@ -230,8 +231,23 @@ function fetchAllHeadings() {
 }
 ```
 
+Pour le fun ajout d'une méthode qui itère directement sur le curseur plutôt que sur un tableau en mémoire
+
 2ème solution :
 
-Refactoring
+Dossier mongo/
+Refactoring et utilisation de modules
+
+db.js : module retournant une connexion vers un mongo local
+testDAO.js : 
+    mise à disposition des méthodes insert(object) et findAll() qui travaillent sur la base test
+
+    les functions insert et findAll sont appelées directment dans ce même fichier à des fins de tests
+
+    Et bim ! Encore un truc bizarre : nodeJS ne rend jamais la main après l'appel de $ node testDAO.js
+
+
+Next step :
+    Mettre en place un modèle plus objet pour gérer les accès mongo à DAO style
 
 
