@@ -162,3 +162,41 @@ function fetchGalliceBC() {
     })
 }
 ```
+
+J'ai décidé d'ajouter un comptage de concepts dans mongodb par lettre de début de mots (compter le nombre de concepts commençant par A, par B, par C etc...)
+
+Et bien un effet de bord marrant, le db.close() ferme la connexion trop tôt.. 
+```js
+function fetchAllHeadings() {
+    //Step 1: declare promise
+    return new Promise((resolve, reject) => {
+        
+        MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
+            assert.equal(null, err)
+
+            db
+            .collection('content_concept')
+            .find({ }, 
+                {"content.labels":1})
+            .toArray((err, docs) => {
+                err 
+                    ? reject(err) 
+                    : resolve(docs)
+            })
+           
+            db.close()    
+        })
+        
+    })
+```
+
+L'erreur obtenue est la suivante
+```js
+node:36513) UnhandledPromiseRejectionWarning: MongoError: connection destroyed, not possible to instantiate cursor
+    at nextFunction (/Users/dboutin/dev/sandbox/node_modules/mongodb-core/lib/cursor.js:616:55)
+    at Cursor.next [as _next] (/Users/dboutin/dev/sandbox/node_modules/mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/dboutin/dev/sandbox/node_modules/mongodb/lib/cursor.js:857:10)
+    at /Users/dboutin/dev/sandbox/node_modules/mongodb/lib/cursor.js:880:7
+```
+
+Faudrait il lancer une promise dans la promise ???

@@ -38,6 +38,26 @@ function fetchGalliceBC() {
     })
 }
 
+function fetchGalliceWithCursor() {
+    //Step 1: declare promise
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
+            assert.equal(null, err)
+            
+            let cursor = db
+            .collection('content_businesscard')
+            .find({ $or: [ {"content.articles.keywords.cptId":78922} , { "content.articles.keywords.cptId":78923 }] , 
+                            "content.portfolio":"EUR"}, 
+                {"content.articles":1, "content.uid":1, "content.":1, "content.sid":1, "content.offerCode":1, "content.companyName":1})
+            
+            resolve(cursor)
+
+            db.close()
+        })
+    })
+}
+
+
 
 function countNumberOfKeywordsPerDoc(docs) {
     docs.forEach(doc => {
@@ -76,24 +96,41 @@ fetchAllHeadings().then(docs => {
     let beginWithA = 0
     let beginWithB = 0
     let beginWithC = 0
+    let beginWithD = 0
+    let beginWithE = 0
+    let beginWithF = 0
     docs.forEach(doc => {
-        let label = doc.content.labels[3].toUpperCase()
-        if (label.match(/^A/)) beginWithA++
-        if (label.match(/^B/)) beginWithB++
-        if (label.match(/^B/)) beginWithC++
+        if (doc.content) {
+            let label = doc.content.labels[3]
+            if (label) {
+                //console.log(`label ${label}`)
+                if (label.match(/^A/)) beginWithA++
+                if (label.match(/^B/)) beginWithB++
+                if (label.match(/^C/)) beginWithC++
+                if (label.match(/^D/)) beginWithD++
+                if (label.match(/^E/)) beginWithE++
+                if (label.match(/^F/)) beginWithF++
+            }
+        }
     })
 
     console.log(`A ${beginWithA}
                  B ${beginWithB}
-                 C ${beginWithC}`)
+                 C ${beginWithC}
+                 D ${beginWithD}
+                 E ${beginWithE}
+                 F ${beginWithF}`)
 })
 
 function fetchAllHeadings() {
     //Step 1: declare promise
     return new Promise((resolve, reject) => {
+        
         MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
             assert.equal(null, err)
             
+            db1 = db
+
             db
             .collection('content_concept')
             .find({ }, 
@@ -103,7 +140,9 @@ function fetchAllHeadings() {
                     ? reject(err) 
                     : resolve(docs)
             })
-           // db.close()
+           
+            db.close()    
         })
+        
     })
 }
