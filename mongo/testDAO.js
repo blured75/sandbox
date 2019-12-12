@@ -36,7 +36,7 @@ function findAll() {
     })
 }
 
-insert({"tamere":"la ute"}).then(c => console.log(c))
+insert({"tamere":"la ute"})
 /*insert({"tamere":"la ute2"})
 insert({"tamere":"celle là elle est pour Nicolas"})
 
