@@ -17,6 +17,15 @@ writeStream.on('finish', () => {
     console.log('wrote all data to file');
 })
 
+// ----------------- Fetch and write all the company dealing gallice wine in a file -----------------------
+fetchGalliceBC().then(docs => {
+    countNumberOfKeywordsPerDoc(docs)
+    writeStream.end()
+})
+.catch(err => {
+    throw err
+})
+
 function fetchGalliceBC() {
     //Step 1: declare promise
     return new Promise((resolve, reject) => {
@@ -37,27 +46,6 @@ function fetchGalliceBC() {
         })
     })
 }
-
-function fetchGalliceWithCursor() {
-    //Step 1: declare promise
-    return new Promise((resolve, reject) => {
-        MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
-            assert.equal(null, err)
-            
-            let cursor = db
-            .collection('content_businesscard')
-            .find({ $or: [ {"content.articles.keywords.cptId":78922} , { "content.articles.keywords.cptId":78923 }] , 
-                            "content.portfolio":"EUR"}, 
-                {"content.articles":1, "content.uid":1, "content.":1, "content.sid":1, "content.offerCode":1, "content.companyName":1})
-            
-            resolve(cursor)
-
-            db.close()
-        })
-    })
-}
-
-
 
 function countNumberOfKeywordsPerDoc(docs) {
     docs.forEach(doc => {
@@ -84,15 +72,8 @@ function countNumberOfKeywordsPerDoc(docs) {
     })
 }
 
-fetchGalliceBC().then(docs => {
-    countNumberOfKeywordsPerDoc(docs)
-    writeStream.end()
-})
-.catch(err => {
-    throw err
-})
-
-fetchAllHeadings().then(docs => {
+// ------------- count the number of heading beginning which each letter of the alphabet -------------------
+fetchAllHeadings().then(([docs, db]) => {
     let beginWithA = 0
     let beginWithB = 0
     let beginWithC = 0
@@ -120,6 +101,8 @@ fetchAllHeadings().then(docs => {
                  D ${beginWithD}
                  E ${beginWithE}
                  F ${beginWithF}`)
+
+    db.close()
 })
 
 function fetchAllHeadings() {
@@ -128,8 +111,6 @@ function fetchAllHeadings() {
         
         MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
             assert.equal(null, err)
-            
-            db1 = db
 
             db
             .collection('content_concept')
@@ -138,11 +119,39 @@ function fetchAllHeadings() {
             .toArray((err, docs) => {
                 err 
                     ? reject(err) 
-                    : resolve(docs)
+                    : resolve([docs, db])
             })
-           
-            db.close()    
         })
         
+    })
+}
+
+// ------------- browse with a cursor all the company without putting them in an array --------------------- 
+fetch10000BCWithCursor().then(([cursor, db]) => {
+    console.log("****** fetch10000BCWithCursor ****")
+    
+    cursor.each((err, doc) => {
+        if (doc) {
+            console.log(doc)
+        } else {
+            db.close()
+        }
+    })
+})
+
+function fetch10000BCWithCursor() {
+    //Step 1: declare promise
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
+            assert.equal(null, err)
+            
+            let cursor = db
+            .collection('content_businesscard')
+            .find({ "content.portfolio":"EUR" }, 
+                {"content.articles":1, "content.uid":1, "content.":1, "content.sid":1, "content.offerCode":1, "content.companyName":1})
+            .limit(1000)
+            
+            resolve([cursor, db])
+        })
     })
 }

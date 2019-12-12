@@ -182,9 +182,11 @@ function fetchAllHeadings() {
                 err 
                     ? reject(err) 
                     : resolve(docs)
+
+                    
             })
            
-            db.close()    
+               
         })
         
     })
@@ -199,4 +201,37 @@ node:36513) UnhandledPromiseRejectionWarning: MongoError: connection destroyed, 
     at /Users/dboutin/dev/sandbox/node_modules/mongodb/lib/cursor.js:880:7
 ```
 
-Faudrait il lancer une promise dans la promise ???
+Faudrait il lancer une promise dans la promise ??? NON !
+
+1 ère solution :
+
+passer les objets db et docs en tableau à la méthode resolve, le then de la promesse y aura accès et il pourra fermer la connexion
+
+```js
+function fetchAllHeadings() {
+    //Step 1: declare promise
+    return new Promise((resolve, reject) => {
+        
+        MongoClient.connect(connectionStr, mongoOptions, function(err, db) {
+            assert.equal(null, err)
+
+            db
+            .collection('content_concept')
+            .find({ }, 
+                {"content.labels":1})
+            .toArray((err, docs) => {
+                err 
+                    ? reject(err) 
+                    : resolve([docs, db])
+            })
+        })
+        
+    })
+}
+```
+
+2ème solution :
+
+Refactoring
+
+
