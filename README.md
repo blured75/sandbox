@@ -2,6 +2,8 @@
 Prérequis : 
 node 8 minimum et maximum :)
 
+Un mongo installé en local, sans auth et qui écoute sur 27017
+
 Ce bac à sable à pour vocation de partager des expériences de coding NodeJS
 
 La programmation avec des méthodes asynchrone étant assez particulière avec node, j'ai eu envie de partager mon expérience sur le principe d'intérroger une base mongo, d'écrire le résultat produit dans un fichier csv et aussi dans une base mysql. C'est complétement con me direz vous mais c'est dans les conneries qu'on fait les meilleures confitures.
