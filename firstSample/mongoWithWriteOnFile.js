@@ -17,6 +17,10 @@ writeStream.on('finish', () => {
     console.log('wrote all data to file');
 })
 
+process.on('uncaughtException', function(err) {
+    console.log(err);
+})
+
 // ----------------- Fetch and write all the company dealing gallice wine in a file -----------------------
 fetchGalliceBC().then(docs => {
     countNumberOfKeywordsPerDoc(docs)

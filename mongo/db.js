@@ -8,27 +8,18 @@ function open(){
     let url = "mongodb://localhost:27017/test"
     return new Promise((resolve, reject)=>{
         // Use connect method to connect to the Server
-        mongoClient.connect(url, (err, db) => {
+        mongoClient.connect(url, (err, conn) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(db);
+                resolve(conn);
             }
         });
     });
 }
 
-// Close the db connection if opened
-function close(db){
-    //Close connection
-    if(db){
-        db.close();
-    }
-}
-
 let db = {
-    open : open,
-    close: close
+    open: open
 }
 
 // Give for the user an access on a db object which you can open, use and close

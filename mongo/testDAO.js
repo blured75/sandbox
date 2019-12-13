@@ -1,16 +1,19 @@
-const db = require('./db')
+const myDB = require('./db')
 
 function insert(object) {
-    db.open()
-    .then((db)=>{
-        return db.collection('chienne')    
+    let connection = null;
+
+    myDB.open()
+    .then((conn)=>{
+        connection = conn;
+        return conn.collection('chienne')    
     })
-    .then((chienne)=>{
-        return chienne.insert(object)
+    .then((collection)=>{
+        return collection.insert(object)
     })
     .then((result)=>{
-        console.log(result);
-        db.close();
+        console.log(result)
+        connection.close()
     })
     .catch((err)=>{
         console.error(err)
@@ -18,17 +21,20 @@ function insert(object) {
 }
 
 function findAll() {
-    return db.open()
-    .then((db)=>{
-        return db.collection('chienne')    
+    let connection = null;
+
+    return myDB.open()
+    .then((conn)=>{
+        connection = conn
+        return conn.collection('chienne')    
     })
-    .then((chienne)=>{
-        return chienne.find({}).toArray()
+    .then((collection)=>{
+        return collection.find({}).toArray()
     })
     .then((result)=>{
         console.log(result)
-        
-        db.close()
+        connection.close()
+
         return result
     })
     .catch((err)=>{
@@ -37,8 +43,7 @@ function findAll() {
 }
 
 insert({"tamere":"la ute"})
-/*insert({"tamere":"la ute2"})
+insert({"tamere":"la ute2"})
 insert({"tamere":"celle là elle est pour Nicolas"})
 
 findAll().then((result) => console.log(result.length))
-*/
