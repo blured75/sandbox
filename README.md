@@ -250,4 +250,10 @@ testDAO.js :
 Next step :
     Mettre en place un modèle plus objet pour gérer les accès mongo à DAO style
 
+Problème de nodejs qui ne rend pas la main résolu.
+La connection n'était jamais fermée réellement
+L'idée du db.close() était un peu merdique
+
+Du coup dans l'objet db je ne laisse l'accès qu'à open()
+La promise renvoie la connection qu'il faut penser à fermer dans la classe appelante
 
