@@ -34,6 +34,8 @@ Les promises ont été créé depuis ES5 afin de moins se prendre la tête avec 
 Une promesse (une sorte de function) prend en constructeur 2 fonctions de callback (resolve et error). resolve sera à appeler dans la promesse si l'exécution s'est déroulé sans encombre, error dans le cas contraire. Une promesse permet d'englober un code asynchrone et d'appeler la fonction success si tout se passe bien. On passe alors un argument à reject ou success.
 A la suite de la promesse on indique .then(...) pour exécuter le code que l'on souhaite et on récupère le paramètre passée à la fonction success.
 
+-- Day 1
+
 Dossier firstSample/
 
 Exemple :
@@ -252,10 +254,34 @@ testDAO.js :
 Next step :
     Mettre en place un modèle plus objet pour gérer les accès mongo à DAO style
 
+
+--- Day 2
+
 Problème de nodejs qui ne rend pas la main résolu.
 La connection n'était jamais fermée réellement
 L'idée du db.close() était un peu merdique
 
 Du coup dans l'objet db je ne laisse l'accès qu'à open()
 La promise renvoie la connection qu'il faut penser à fermer dans la classe appelante
+
+
+Bon c'était bien marrant mais en fait c'est portnawak parce que mongoclient fournit déjà des promesses nativement si on n'utilise pas de callback
+
+Dossier day2
+
+mongoDay2.js
+
+    1 function simple d'insert et 1 function simple de find
+
+* Implementing an ArticleAPI with MongoDB
+    model/Article.js
+    articleTest.js
+
+* Sample of Redis usage
+    redis/channelPubSub.js
+    redis/testRedis.js
+
+* Test of serialization / deserialization perf
+    serialization.js
+
 
