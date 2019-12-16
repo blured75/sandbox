@@ -380,3 +380,13 @@ performQuery().then(() => {
 })
 ```
 
+
+day5 : Express / Connect + postgres
+
+day5/testConnect.js
+
+```js
+
+```
+
+

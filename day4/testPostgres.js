@@ -51,14 +51,14 @@ async function performQuery(){
 
 async function selectNow2() {
   console.log("1. connect & select now()")
-  await client.query('SELECT NOW()')
+  await client.query('SELECT NOW() as jour')
   .then(res => {
-    console.log(res.rows[0])
+    console.log(typeof res.rows[0])
+    console.log(res.rows[0].jour)
   })
   .catch(err => {
     console.log(err.stack)
   })
-  
 }
 
 performQuery().then(() => {
