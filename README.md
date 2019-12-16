@@ -321,3 +321,62 @@ A priori le client.query est asynchrone donc le console.log("..... between 2 que
 day4
 Si on veut chainer ces requêtes et être sur que tout se déroule dans l'ordre définit
 
+
+Ce type d'écriture est un peu bizarre mais ça fonctionne
+```js
+getConn().
+then(async() => {
+  console.log("avant 1st selectNow2")
+  await selectNow2()
+  console.log("after 1st selectNow2")
+})
+.then(async() => {
+  console.log("avant 2nd selectNow2")
+  await selectNow2()
+  console.log("after 2nd selectNow2")
+})
+
+async function selectNow2() {
+  await client.query('SELECT NOW()')
+  .then(res => {
+    console.log(res.rows[0])
+  })
+  .catch(err => {
+    console.log(err.stack)
+  })
+  
+  console.log("1. connect & select now()")
+}
+```
+
+Une manière plus simple de faire la même chose
+```js
+async function performQuery(){
+  await getConn();
+  console.log("before 1st selectNow2");
+  await selectNow2();
+  console.log("after 1st selectNow2");
+  console.log("before 2nd selectNow2");
+  await selectNow2();
+  console.log("after 2nd selectNow2");
+}
+
+
+async function selectNow2() {
+  console.log("1. connect & select now()")
+  await client.query('SELECT NOW()')
+  .then(res => {
+    console.log(res.rows[0])
+  })
+  .catch(err => {
+    console.log(err.stack)
+  })
+  
+}
+
+performQuery().then(() => {
+  console.log("DONE")
+  client.end()
+})
+```
+

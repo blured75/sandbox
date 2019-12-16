@@ -37,21 +37,20 @@ async function getConn() {
 
     return client
 }
-  
-console.log("AAA")
-getConn().
-then(() => {
-  console.log("avant 1st selectNow2")
-  selectNow2()
-  console.log("after 1st selectNow2")
-})
-.then(() => {
-  console.log("avant 2nd selectNow2")
-  selectNow2()
-  console.log("after 2nd selectNow2")
-})
+
+async function performQuery(){
+  await getConn();
+  console.log("before 1st selectNow2");
+  await selectNow2();
+  console.log("after 1st selectNow2");
+  console.log("before 2nd selectNow2");
+  await selectNow2();
+  console.log("after 2nd selectNow2");
+}
+
 
 async function selectNow2() {
+  console.log("1. connect & select now()")
   await client.query('SELECT NOW()')
   .then(res => {
     console.log(res.rows[0])
@@ -60,16 +59,9 @@ async function selectNow2() {
     console.log(err.stack)
   })
   
-  console.log("1. connect & select now()")
 }
 
-async function selectNow() {
-  await client.query('SELECT NOW()', (err, res) => {
-    if (err) {
-      console.log(err.stack)
-    } else {
-      console.log("1. connect & select now()")
-      console.log(res.rows[0])
-    }
-  })
-}
+performQuery().then(() => {
+  console.log("DONE")
+  client.end()
+})
