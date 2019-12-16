@@ -6,3 +6,8 @@
 2019-12-16 09:43:28.429 CET [14538] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2019-12-16 09:43:28.453 CET [14539] LOG:  database system was shut down at 2019-12-16 09:43:24 CET
 2019-12-16 09:43:28.458 CET [14538] LOG:  database system is ready to accept connections
+2019-12-16 17:40:34.363 CET [14538] LOG:  received smart shutdown request
+2019-12-16 17:40:34.370 CET [14538] LOG:  background worker "logical replication launcher" (PID 14545) exited with exit code 1
+2019-12-16 17:40:34.370 CET [19301] FATAL:  terminating connection due to administrator command
+2019-12-16 17:40:34.372 CET [14540] LOG:  shutting down
+2019-12-16 17:40:34.892 CET [14538] LOG:  database system is shut down

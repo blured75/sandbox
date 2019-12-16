@@ -380,3 +380,20 @@ performQuery().then(() => {
 })
 ```
 
+
+day5 : Express / Connect + postgres
+
+day5/testConnect.js
+
+day6/
+* handlingErrors.js
+    error handling defined in errorHandler.js
+
+* expressTest.js
+
+* completeExpressSite/shoutBox
+    Implementation of a kind of twitter in node
+    Using express, ejs
+
+Now, it is time to provide an external api to shoutBox
+
