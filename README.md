@@ -270,7 +270,6 @@ Bon c'était bien marrant mais en fait c'est portnawak parce que mongoclient fou
 Dossier day2
 
 mongoDay2.js
-
     1 function simple d'insert et 1 function simple de find
 
 * Implementing an ArticleAPI with MongoDB
@@ -282,6 +281,18 @@ mongoDay2.js
     redis/testRedis.js
 
 * Test of serialization / deserialization perf
-    serialization.js
+    serialization.js 
 
+* Test on webStorage implementation for node
+    usage of node webStorage
+
+Pourquoi ne pas passer en anglais de temps en temps, ça passe bien
+
+
+day 3
+* Test postgres access
+    day3/postgres/testPostgres.js
+
+    On a une série d'ordre SQL lancés sous forme de callback et de promises et de divers autres traitements. Comment ordonnancer tout ça ?
+    
 
