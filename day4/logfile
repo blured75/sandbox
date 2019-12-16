@@ -1,0 +1,8 @@
+2019-12-16 09:43:13.435 CET [14393] FATAL:  lock file "postmaster.pid" already exists
+2019-12-16 09:43:13.435 CET [14393] HINT:  Is another postmaster (PID 6145) running in data directory "/Users/dboutin/postgres_data"?
+2019-12-16 09:43:28.424 CET [14538] LOG:  starting PostgreSQL 12.1 on x86_64-apple-darwin18.7.0, compiled by Apple clang version 11.0.0 (clang-1100.0.33.12), 64-bit
+2019-12-16 09:43:28.428 CET [14538] LOG:  listening on IPv6 address "::1", port 5432
+2019-12-16 09:43:28.428 CET [14538] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-12-16 09:43:28.429 CET [14538] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-12-16 09:43:28.453 CET [14539] LOG:  database system was shut down at 2019-12-16 09:43:24 CET
+2019-12-16 09:43:28.458 CET [14538] LOG:  database system is ready to accept connections

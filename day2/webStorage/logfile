@@ -1,0 +1,19 @@
+2019-12-13 15:24:57.715 CET [55646] LOG:  starting PostgreSQL 12.1 on x86_64-apple-darwin18.7.0, compiled by Apple clang version 11.0.0 (clang-1100.0.33.12), 64-bit
+2019-12-13 15:24:57.719 CET [55646] LOG:  listening on IPv6 address "::1", port 5432
+2019-12-13 15:24:57.719 CET [55646] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-12-13 15:24:57.720 CET [55646] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-12-13 15:24:57.734 CET [55647] LOG:  database system was shut down at 2019-12-13 15:24:26 CET
+2019-12-13 15:24:57.738 CET [55646] LOG:  database system is ready to accept connections
+2019-12-13 16:18:39.260 CET [59566] FATAL:  database "dboutin" does not exist
+2019-12-13 16:19:10.364 CET [59643] FATAL:  database "dboutin" does not exist
+2019-12-13 16:42:49.276 CET [62663] LOG:  invalid length of startup packet
+2019-12-13 16:43:27.516 CET [62822] LOG:  invalid length of startup packet
+2019-12-13 16:44:00.323 CET [62901] LOG:  invalid length of startup packet
+2019-12-13 16:44:18.312 CET [62975] LOG:  invalid length of startup packet
+2019-12-13 16:46:06.221 CET [63249] ERROR:  relation "users" does not exist at character 13
+2019-12-13 16:46:06.221 CET [63249] STATEMENT:  INSERT INTO users(name, email) VALUES($1, $2) RETURNING *
+2019-12-13 16:57:41.862 CET [64558] FATAL:  terminating connection due to administrator command
+2019-12-13 16:57:41.862 CET [55646] LOG:  received smart shutdown request
+2019-12-13 16:57:41.868 CET [55646] LOG:  background worker "logical replication launcher" (PID 55653) exited with exit code 1
+2019-12-13 16:57:41.869 CET [55648] LOG:  shutting down
+2019-12-13 16:57:41.876 CET [55646] LOG:  database system is shut down

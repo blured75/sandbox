@@ -1,0 +1,27 @@
+2019-12-14 14:11:55.298 CET [6145] LOG:  starting PostgreSQL 12.1 on x86_64-apple-darwin18.7.0, compiled by Apple clang version 11.0.0 (clang-1100.0.33.12), 64-bit
+2019-12-14 14:11:55.301 CET [6145] LOG:  listening on IPv6 address "::1", port 5432
+2019-12-14 14:11:55.301 CET [6145] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-12-14 14:11:55.302 CET [6145] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-12-14 14:11:55.325 CET [6146] LOG:  database system was shut down at 2019-12-13 16:57:41 CET
+2019-12-14 14:11:55.334 CET [6145] LOG:  database system is ready to accept connections
+2019-12-14 14:15:24.502 CET [6549] ERROR:  syntax error at or near "select" at character 32
+2019-12-14 14:15:24.502 CET [6549] STATEMENT:  SELECT $1::text as first_name, select $2::text as last_name
+2019-12-14 14:16:57.350 CET [6630] ERROR:  syntax error at or near "select" at character 32
+2019-12-14 14:16:57.350 CET [6630] STATEMENT:  SELECT $1::text as first_name, select $2::text as last_name from dual
+2019-12-14 14:17:21.597 CET [6706] ERROR:  column "titi" does not exist at character 8
+2019-12-14 14:17:21.597 CET [6706] STATEMENT:  SELECT "titi"
+2019-12-14 14:18:01.352 CET [6792] ERROR:  bind message supplies 2 parameters, but prepared statement "" requires 0
+2019-12-14 14:18:01.352 CET [6792] STATEMENT:  SELECT 'titi'
+2019-12-14 14:18:34.252 CET [6869] ERROR:  syntax error at or near "'titi'" at character 14
+2019-12-14 14:18:34.252 CET [6869] STATEMENT:  SELECT $1 as 'titi'
+2019-12-14 14:20:18.239 CET [7102] ERROR:  bind message supplies 1 parameters, but prepared statement "" requires 2
+2019-12-14 14:20:18.239 CET [7102] STATEMENT:  SELECT $1::text as first_name, $2::text as last_name
+2019-12-14 14:25:03.855 CET [7621] LOG:  invalid length of startup packet
+2019-12-14 14:43:12.221 CET [8153] LOG:  invalid length of startup packet
+2019-12-14 14:54:12.181 CET [8871] ERROR:  bind message supplies 2 parameters, but prepared statement "" requires 0
+2019-12-14 14:54:12.181 CET [8871] STATEMENT:  SELECT * from users
+2019-12-16 09:43:24.672 CET [6145] LOG:  received fast shutdown request
+2019-12-16 09:43:24.672 CET [6145] LOG:  aborting any active transactions
+2019-12-16 09:43:24.674 CET [6145] LOG:  background worker "logical replication launcher" (PID 6152) exited with exit code 1
+2019-12-16 09:43:24.674 CET [6147] LOG:  shutting down
+2019-12-16 09:43:24.682 CET [6145] LOG:  database system is shut down

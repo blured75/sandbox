@@ -11,6 +11,7 @@ const client = new Client({
     port: 5432,
 })
 client.connect()
+
 // callback
 client.query('SELECT NOW()', (err, res) => {
     if (err) {

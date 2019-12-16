@@ -295,4 +295,29 @@ day 3
 
     On a une série d'ordre SQL lancés sous forme de callback et de promises et de divers autres traitements. Comment ordonnancer tout ça ?
     
+    Pour l'instant ça s'exécute séquentiellement, j'ai l'impression que c'est un coup de chance
+
+A priori le client.query est asynchrone donc le console.log("..... between 2 queries ....") va s'éxécuter avant les 2 requêtes.
+```js
+    client.query(query, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        } else {
+            console.log("1. bla")
+        }
+    })
+
+    console.log(".... between 2 queries ...")
+
+    client.query(query, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        } else {
+            console.log("2. bli")
+        }
+    })
+```
+
+day4
+Si on veut chainer ces requêtes et être sur que tout se déroule dans l'ordre définit
 
