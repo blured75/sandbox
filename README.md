@@ -397,3 +397,9 @@ day6/
 
 Now, it is time to provide an external api to shoutBox
 
+---
+
+Day7 : Simple express with docker
+
+$ export PGDATABASE=articles
+$ export PGUSER=postgres

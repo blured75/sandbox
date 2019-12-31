@@ -10,29 +10,9 @@ app.use(errorHandler)
 app.use(compression())
 app.use(cookieSession({ keys: ['secret1', 'secret2'] }))
 app.use(bodyParser.urlencoded({extended: false}))
-app.use('/foo', function fooMiddleware(req, res, next) {
-    console.log("interception of /foo url type")
-    // req.url starts with "/foo"
-    //next()
-    res.end("ute")
-})
-app.use('/bar', function barMiddleware(req, res, next) {
-    console.log("interception of /bar url type")
-    // req.url starts with "/bar"
-    //next()
-    res.end("ca alors")
-})
+
 app.use('/favicon.ico', function barMiddleware(req, res, next) {
     console.log("favicon.ico asked stopping there")
-})
-app.use(setup(':method Pouet :url'))
-
-app.use('/appli', (req, res, next) => {
-    console.log("first middleware")
-    //throw err
-    performQuery().then(jour => {
-        res.end(`Ta mere le ${jour}`)
-    })
 })
 
 app.use('/', (req, res, next) => {
@@ -41,14 +21,7 @@ app.use('/', (req, res, next) => {
     })
 })
 
-// Génération d'une erreur interne au serveur
-app.use((req,res) => {
-    foo()
-    res.setHeader('Content-Type', 'text/plain')
-    res.end('hello world')
-})
-
-
+app.use(setup({truc:"machin"}))
 
 function setup(format) {
     const regexp = /:(\w+)/g
@@ -60,9 +33,6 @@ function setup(format) {
         next()
     }
 }
-
-
-app.use(setup({truc:"machin"}))
 
 
 async function performQuery() {
@@ -83,32 +53,48 @@ async function selectNow2(client) {
 }
 
 const pool = new Pool({
-    user: 'dboutin',
-    host: 'localhost',
-    database: 'articles',
-    password: '',
-    port: 5432,
+    host: 'db',
+    port: 5432
 })
 
 async function getConn() {
+  console.log(process.env)
   // Promise chain for pg Pool client
-  return await pool
-    .connect()
-    .then((conn) => {
-      console.log("connection done")
-      return conn
-    })
-    .catch(err => {
-      console.log("\nclient.connect():", err.name)
-      console.log(err)
+  let retry = 5
+  let conn2
 
-      // iterate over the error object attributes
-      for (item in err) {
-        if (err[item] != undefined) {
-          process.stdout.write(item + " - " + err[item] + " ")
+    while (retry) {
+        try {
+            conn2 = await pool
+                    .connect()
+                    .then((conn) => {
+                        console.log("connection done")
+                        return conn
+                    })
+                    .catch(err => {
+                        console.log("\nclient.connect():", err.name)
+                        console.log(err)
+
+                        // iterate over the error object attributes
+                        for (item in err) {
+                            if (err[item] != undefined) {
+                                process.stdout.write(item + " - " + err[item] + " ")
+                            }
+                        }
+                    })
+            break
         }
-      }
-    })
+        catch (err) {
+            console.log(err)
+            retries -= 1
+            console.log(`retries left ${retries}`)
+            // Wait for 5 second
+            await new Promise(res => setTimeout(res, 5000))
+        }
+
+    }
+
+  return conn2
 }
 
 app.listen(3000)
