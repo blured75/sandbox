@@ -401,5 +401,24 @@ Now, it is time to provide an external api to shoutBox
 
 Day7 : Simple express with docker
 
-$ export PGDATABASE=articles
-$ export PGUSER=postgres
+Utilisation des variables  
+            PGPASSWORD: postgres
+            PGUSER: postgres
+            PGDATABASE: articles
+
+Le driver postgres reconnait ces variables et les inclus dans la demande de connexion si rien n'est fournit
+
+Pour builder l'image de l'application express
+```
+$ docker build -t blured75/node-web-app .
+```
+
+Pour monter l'ensemble des VM (postgres & express)
+```
+$ docker-compose up
+```
+
+Accès à l'application via http://localhost:3000 qui affiche l'heure en faisant un appel à postgres :D
+
+Trèèèès utile
+
